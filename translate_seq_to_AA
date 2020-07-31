@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# coding: utf-8
+#Write a Python function that will recursively transcribe a DNA sequence (input as a string)
+
+import re
+
+def Reverse_Comp_Recursive(sequence):
+    find_u = re.search("U",sequence)
+    for base in sequence:
+        if find_u:
+            complement = {'A': 'U', 'C': 'G', 'G': 'C', 'U': 'A'}
+        else:
+            complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
+    return ''.join([complement[base] for base in sequence[::-1]])
+
+def tRNA_to_AA(sequence):
+    tRNA2AA = {
+        "UUU":"F", "UUC":"F", "UUA":"L", "UUG":"L",
+        "UCU":"S", "UCC":"s", "UCA":"S", "UCG":"S",
+        "UAU":"Y", "UAC":"Y", "UAA":"STOP", "UAG":"STOP",
+        "UGU":"C", "UGC":"C", "UGA":"STOP", "UGG":"W",
+        "CUU":"L", "CUC":"L", "CUA":"L", "CUG":"L",
+        "CCU":"P", "CCC":"P", "CCA":"P", "CCG":"P",
+        "CAU":"H", "CAC":"H", "CAA":"Q", "CAG":"Q",
+        "CGU":"R", "CGC":"R", "CGA":"R", "CGG":"R",
+        "AUU":"I", "AUC":"I", "AUA":"I", "AUG":"M",
+        "ACU":"T", "ACC":"T", "ACA":"T", "ACG":"T",
+        "AAU":"N", "AAC":"N", "AAA":"K", "AAG":"K",
+        "AGU":"S", "AGC":"S", "AGA":"R", "AGG":"R",
+        "GUU":"V", "GUC":"V", "GUA":"V", "GUG":"V",
+        "GCU":"A", "GCC":"A", "GCA":"A", "GCG":"A",
+        "GAU":"D", "GAC":"D", "GAA":"E", "GAG":"E",
+        "GGU":"G", "GGC":"G", "GGA":"G", "GGG":"G",
+    }
+    protein = []
+    end = len(sequence) - (len(sequence) %3) - 1
+    for i in range(0,end,3):
+        codon = sequence[i:i+3]
+        if codon in tRNA2AA:
+            aminoacid = tRNA2AA[codon]
+            protein.append(aminoacid)
+        else:
+            protein.append("N")
+    return print("".join(protein))
+
+def Translate_seq_to_AA(sequence):
+    mRNA = Reverse_Comp_Recursive(sequence)
+    tRNA = Reverse_Comp_Recursive(mRNA)
+    tRNA_to_AA(tRNA)
+    print(" ")
+
+Translate_seq_to_AA()
+
