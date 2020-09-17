@@ -1,3 +1,3 @@
 # Python-Practice
 
-### This is a collection of small coding assignments I completed using Python
+#### This is a collection of small coding assignments I completed using Python.
